@@ -1,0 +1,45 @@
+.App{
+    padding-top: 300px;
+    padding-left: 45%;
+}
+.wrapper{
+    text-align: center;
+    border : black 5px solid;
+    width: 250px;
+}
+.btnAll{
+    padding-top: 30px;
+}
+.data_blue{
+    border : black 2px solid;
+    padding: 10px;
+    font-size: 20px;
+    color: blue;
+    font-weight: bolder;
+}
+.data_red{
+    border : black 2px solid;
+    padding: 10px;
+    font-size: 20px;
+    color: red;
+    font-weight: bolder;
+}
+.btnAll{
+    border : black 2px solid;
+    margin: 20px;
+    padding-bottom: 20px;
+}
+.btn1{
+    margin-right: 20px;
+    background: darkseagreen;
+}
+.btn2{
+    margin-right: 20px;
+    background: darkseagreen;
+}
+.ddd{
+    margin-top: 30px;
+}
+.line{
+height: 7px;
+}
