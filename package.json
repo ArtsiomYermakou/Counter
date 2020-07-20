@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "Counter": "https://github.com/ArtsiomYermakou/Counter",
+  "Counter": "https://artsiomyermakou.github.io/Counter/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
