@@ -47,8 +47,8 @@ function Counter() {
 
     function Monitor(props: PropsType) {
         return startValue == maxValue
-                ? <span className={s.data_red}>{props.data}</span>
-                : <span className={s.data_blue}>{props.data}</span>
+            ? <span className={s.data_red}>{props.data}</span>
+            : <span className={s.data_blue}>{props.data}</span>
 
 
     }
@@ -62,11 +62,17 @@ function Counter() {
                     <h3>Counter:</h3>
                 </div>
                 <div>
-                    <Monitor data={ minValue < 0 || maxValue < 0 || minValue === maxValue ? <span className={s.data_red}>Incorrect value!</span> : startValue } />
+                    <Monitor data={minValue < 0 || maxValue < 0 || minValue === maxValue ?
+                        <span className={s.data_red}>Incorrect value!</span> : startValue}/>
                 </div>
                 <div className={s.btnAll}>
-                    <button className={s.btn1} onClick={() => {Summ()}} disabled={startValue === maxValue}>Inc</button>
-                    <button className={s.btn2} onClick={() => {setStartValue(minValue)}}>Reset
+                    <button className={s.btn1} onClick={() => {
+                        Summ()
+                    }} disabled={startValue === maxValue}>Inc
+                    </button>
+                    <button className={s.btn2} onClick={() => {
+                        setStartValue(minValue)
+                    }}>Reset
                     </button>
                 </div>
                 <hr className={s.line}/>
@@ -85,7 +91,9 @@ function Counter() {
                                onChange={ChangeMin}
                         />
                     </div>
-                    <button className={s.ddd} onClick={SET} disabled={minValue < 0 || maxValue < 0 || minValue > maxValue}>SET</button>
+                    <button className={s.ddd} onClick={SET}
+                            disabled={minValue < 0 || maxValue < 0 || minValue > maxValue}>SET
+                    </button>
                     <button className={s.ddd} onClick={CLEAR}>CLEAR</button>
                 </div>
             </div>
