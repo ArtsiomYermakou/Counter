@@ -3,14 +3,21 @@ import s from "./CSS.module.css";
 import {Monitor} from "../Monitor";
 
 type PropsType = {
-    data: number | null
+    data: any
 }
+
 
 function Counter() {
 
-    let [minValue, setMinValue] = useState(0);
-    let [maxValue, setMaxValue] = useState(0);
+    let min = localStorage.getItem("minValue")
+    let max = localStorage.getItem("maxValue")
+
+    let [minValue, setMinValue] = useState<any>(min);
+    let [maxValue, setMaxValue] = useState<any>(max);
     let [startValue, setStartValue] = useState(0);
+
+    localStorage.setItem("minValue", minValue.toString())
+    localStorage.setItem("maxValue", maxValue.toString())
 
 
     function Summ() {
@@ -32,9 +39,18 @@ function Counter() {
     const SET = () => {
         setStartValue(minValue);
     }
+    const CLEAR = () => {
+        setMinValue(minValue = 0);
+        setMaxValue(maxValue = 0);
+    }
 
-     function Monitor(props:PropsType) {
-        return startValue == maxValue ?  <span className={s.data_red}>{props.data}</span> : <span className={s.data_blue}>{props.data}</span>
+
+    function Monitor(props: PropsType) {
+        return startValue == maxValue
+                ? <span className={s.data_red}>{props.data}</span>
+                : <span className={s.data_blue}>{props.data}</span>
+
+
     }
 
 
@@ -46,11 +62,12 @@ function Counter() {
                     <h3>Counter:</h3>
                 </div>
                 <div>
-                    <Monitor data={startValue}/>
+                    <Monitor data={ minValue < 0 || maxValue < 0 || minValue === maxValue ? <span className={s.data_red}>Incorrect value!</span> : startValue } />
                 </div>
                 <div className={s.btnAll}>
                     <button className={s.btn1} onClick={() => {Summ()}} disabled={startValue === maxValue}>Inc</button>
-                    <button className={s.btn2} onClick={() => {setStartValue(minValue)}}>Reset</button>
+                    <button className={s.btn2} onClick={() => {setStartValue(minValue)}}>Reset
+                    </button>
                 </div>
                 <hr className={s.line}/>
                 <div className={s.btnAll}>
@@ -68,7 +85,8 @@ function Counter() {
                                onChange={ChangeMin}
                         />
                     </div>
-                    <button className={s.ddd} onClick={SET} >SET</button>
+                    <button className={s.ddd} onClick={SET} disabled={minValue < 0 || maxValue < 0 || minValue > maxValue}>SET</button>
+                    <button className={s.ddd} onClick={CLEAR}>CLEAR</button>
                 </div>
             </div>
         </div>

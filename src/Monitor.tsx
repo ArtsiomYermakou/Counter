@@ -2,14 +2,14 @@ import s from "./Counter/CSS.module.css";
 import React from "react";
 
 type PropsType = {
-    data: number | null
+    data: any
 }
 
 
 
 
 export function Monitor(props: PropsType) {
-    return <span className={s.data_blue}>{props.data}</span>
+    return <div className={s.data_blue}>{props.data}</div>
 }
 
 
