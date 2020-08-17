@@ -44,14 +44,18 @@ function Counter() {
         setMaxValue(maxValue = 0);
     }
 
+    const inc_max = () => {
+        setMaxValue(+maxValue + 5)
+    }
+
 
     function Monitor(props: PropsType) {
         return startValue == maxValue
             ? <span className={s.data_red}>{props.data}</span>
             : <span className={s.data_blue}>{props.data}</span>
-
-
     }
+
+
 
 
     return (
@@ -66,34 +70,20 @@ function Counter() {
                         <span className={s.data_red}>Incorrect value!</span> : startValue}/>
                 </div>
                 <div className={s.btnAll}>
-                    <button className={s.btn1} onClick={() => {
-                        Summ()
-                    }} disabled={startValue === maxValue}>Inc
-                    </button>
-                    <button className={s.btn2} onClick={() => {
-                        setStartValue(minValue)
-                    }}>Reset
-                    </button>
+                    <button className={s.btn1} onClick={() => {Summ()}} disabled={startValue === maxValue}>Inc</button>
+                    <button className={s.btn2} onClick={() => {setStartValue(minValue)}}>Reset</button>
                 </div>
                 <hr className={s.line}/>
                 <div className={s.btnAll}>
                     <div>
                         <span>Max value: </span>
-                        <input type="number"
-                               value={maxValue}
-                               onChange={ChangeMax}
-                        />
+                        <input type="number" value={maxValue} onChange={ChangeMax}/><button onClick={inc_max}>+5</button>
                     </div>
                     <div className={s.ddd}>
                         <span>Min value: </span>
-                        <input type="number"
-                               value={minValue}
-                               onChange={ChangeMin}
-                        />
+                        <input type="number" value={minValue} onChange={ChangeMin}/><button onClick={ () => setMinValue(+minValue + 10) }>+10</button>
                     </div>
-                    <button className={s.ddd} onClick={SET}
-                            disabled={minValue < 0 || maxValue < 0 || minValue > maxValue}>SET
-                    </button>
+                    <button className={s.ddd} onClick={SET} disabled={minValue < 0 || maxValue < 0 || minValue > maxValue || +maxValue == 0}>SET</button>
                     <button className={s.ddd} onClick={CLEAR}>CLEAR</button>
                 </div>
             </div>
