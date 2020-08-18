@@ -9,15 +9,15 @@ type PropsType = {
 
 function Counter() {
 
-    let min = localStorage.getItem("minValue")
-    let max = localStorage.getItem("maxValue")
+    // let min = localStorage.getItem("minValue")
+    // let max = localStorage.getItem("maxValue")
 
-    let [minValue, setMinValue] = useState<any>(min);
-    let [maxValue, setMaxValue] = useState<any>(max);
+    let [minValue, setMinValue] = useState<any>(0);
+    let [maxValue, setMaxValue] = useState<any>(0);
     let [startValue, setStartValue] = useState(0);
 
-    localStorage.setItem("minValue", minValue.toString())
-    localStorage.setItem("maxValue", maxValue.toString())
+    // localStorage.setItem("minValue", minValue.toString())
+    // localStorage.setItem("maxValue", maxValue.toString())
 
 
     function Summ() {
