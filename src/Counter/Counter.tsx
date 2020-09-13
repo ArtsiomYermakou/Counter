@@ -1,88 +1,110 @@
 import React, {useState} from 'react';
 import s from "./CSS.module.css";
 import {Monitor} from "../Monitor";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../store/redux-store";
+import {incrementAC, InitialStateType, SetToMinValueAC} from "../store/countReducer";
 
 type PropsType = {
     data: any
 }
 
-
 function Counter() {
 
-    let min = localStorage.getItem("minValue")
-    let max = localStorage.getItem("maxValue")
 
-    let [minValue, setMinValue] = useState<any>(min);
-    let [maxValue, setMaxValue] = useState<any>(max);
-    let [startValue, setStartValue] = useState(0);
-    let [startTableValue, setStartTableValue] = useState("Enter value");
+    const dispatch = useDispatch();
+    const count = useSelector<AppRootStateType, number>(state => state.count.counterValue)
 
-    localStorage.setItem("minValue", minValue.toString())
-    localStorage.setItem("maxValue", maxValue.toString())
+    console.log(count)
+    // let min = localStorage.getItem("minValue")
+    // let max = localStorage.getItem("maxValue")
 
+    let [minValue, setMinValue] = useState(0);
+    let [maxValue, setMaxValue] = useState(0);
+    // let [startTableValue, setStartTableValue] = useState("Enter value");
 
-    function Summ() {
-        if (minValue < maxValue) {
-            setStartValue(startValue + 1)
+    // localStorage.setItem("minValue", minValue.toString())
+    // localStorage.setItem("maxValue", maxValue.toString())
+
+    const [disabledButton, setDisabledButton] = useState(false);
+
+    function summ() {
+        if (count < maxValue) {
+            dispatch(incrementAC());
+        }
+        if((maxValue -1) === count){
+            setDisabledButton(true)
         }
     }
 
-
-    const ChangeMin = (e: any) => {
-        let min = e.currentTarget.value;
-        setMinValue(Number(min));
-    }
-    const ChangeMax = (e: any) => {
+    const changeMax = (e: any) => {
         let max = e.currentTarget.value;
+
+        if (max <= minValue || minValue < 0) {
+            setDisabledButton(true)
+        } else {
+            setDisabledButton(false)
+        }
         setMaxValue(Number(max));
     }
 
-    const SET = () => {
-        setStartValue(minValue);
-    }
-    const CLEAR = () => {
-        setMinValue(minValue = 0);
-        setMaxValue(maxValue = 0);
+    const changeMin = (e: any) => {
+        let min = e.currentTarget.value;
+
+        if (min > maxValue || minValue < 0) {
+            setDisabledButton(true)
+        } else {
+            setDisabledButton(false)
+        }
+        setMinValue(Number(min));
     }
 
-    const inc_max = () => {
-        setMaxValue(+maxValue + 5)
+    const reset = () => {
+        dispatch(SetToMinValueAC(minValue));
+        setDisabledButton(false)
     }
+
+    // const CLEAR = () => {
+    //     setMinValue(minValue = 0);
+    //     setMaxValue(maxValue = 0);
+    // }
+
+    // const inc_max = () => {
+    //     setMaxValue(+maxValue + 5)
+    // }
 
 
     function Monitor(props: PropsType) {
-        return startValue == maxValue
+        return count === maxValue
             ? <span className={s.data_red}>{props.data}</span>
             : <span className={s.data_blue}>{props.data}</span>
     }
 
     return (
-
         <div className={s.App}>
             <div className={s.wrapper}>
                 <div>
-                    <h3>Counter:</h3>
+                    <h3>Counter:</h3><br/>
                 </div>
                 <div>
-                    <Monitor data={minValue < 0 || maxValue < 0 || minValue === maxValue ?
-                        <span className={s.data_red}>Incorrect value!</span> : startValue}/>
+                    <Monitor data={count}/>
                 </div>
                 <div className={s.btnAll}>
-                    <button className={s.btn1} onClick={() => {Summ()}} disabled={startValue === maxValue}>Inc</button>
-                    <button className={s.btn2} onClick={() => {setStartValue(minValue)}}>Reset</button>
+                    <button className={s.btn1} onClick={summ} disabled={disabledButton}>Inc</button>
+                    <button className={s.btn2} onClick={reset}>Reset</button>
                 </div>
                 <hr className={s.line}/>
                 <div className={s.btnAll}>
                     <div>
                         <span>Max value: </span>
-                        <input type="number" value={maxValue} onChange={ChangeMax}/><button onClick={inc_max}>+5</button>
+                        <input type="number" value={maxValue} onChange={changeMax}/>
                     </div>
                     <div className={s.ddd}>
                         <span>Min value: </span>
-                        <input type="number" value={minValue} onChange={ChangeMin}/><button onClick={ () => setMinValue(+minValue + 10) }>+10</button>
+                        <input type="number" value={minValue} onChange={changeMin}/>
                     </div>
-                    <button className={s.ddd} onClick={SET} disabled={minValue < 0 || maxValue < 0 || minValue > maxValue || +maxValue == 0}>SET</button>
-                    <button className={s.ddd} onClick={CLEAR}>CLEAR</button>
+                    <button className={s.ddd} onClick={reset}>SET</button>
+                    {/*<button className={s.ddd} onClick={CLEAR}>CLEAR</button>*/}
                 </div>
             </div>
         </div>
