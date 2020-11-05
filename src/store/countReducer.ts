@@ -25,13 +25,11 @@ const countReducer = (state: InitialStateType = InitialState, action: ActionType
     }
 }
 
-
 export const incrementAC = () => (
     {type: "INCREMENT"} as const
 )
 export const SetToMinValueAC = (minValue: number) => {
     return {type: "SET-MIN-VALUE", minValue} as const
 }
-
 
 export default countReducer;
